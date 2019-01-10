@@ -1,12 +1,15 @@
+import io
+
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from tablib import Dataset
-from .resources import PersonResource
 
-from polls.models import Choice, Question
+from reportlab.pdfgen import canvas
+
+from .models import Choice, Question
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -66,3 +69,24 @@ def export(request):
     ##response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     ##response['Content-Disposition'] = 'attachment; filename="persons.xls"'
     return response
+
+""" # I cant find where this option needs to be clicked on the website when activated
+def some_view(request):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+"""

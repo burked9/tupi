@@ -3,7 +3,67 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+class Airline(models.Model):
+    # The list of columns in the DB table
+    index = models.IntegerField(blank=True, null=True)
+    id = models.TextField(blank=True, null=False, primary_key=True)
+    name = models.TextField(blank=True, null=True)
+    alias = models.TextField(blank=True, null=True)
+    iata = models.TextField(blank=True, null=True)
+    icao = models.TextField(blank=True, null=True)
+    callsign = models.TextField(blank=True, null=True)
+    country = models.TextField(blank=True, null=True)
+    active = models.TextField(blank=True, null=True)
 
+    class Meta:
+        managed = False
+        db_table = 'airlines'
+    # The information which will be shown in the Admin Page
+    def __str__(self):
+        return self.name    
+
+class Airport(models.Model):
+    # The list of columns in the DB table
+    index = models.IntegerField(blank=True, null=True)
+    id = models.TextField(blank=True, null=False, primary_key=True)
+    name = models.TextField(blank=True, null=True)
+    city = models.TextField(blank=True, null=True)
+    country = models.TextField(blank=True, null=True)
+    code = models.TextField(blank=True, null=True)
+    icao = models.TextField(blank=True, null=True)
+    latitude = models.TextField(blank=True, null=True)
+    longitude = models.TextField(blank=True, null=True)
+    altitude = models.TextField(blank=True, null=True)
+    offset = models.TextField(blank=True, null=True)
+    dst = models.TextField(blank=True, null=True)
+    timezone = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'airports'
+    # The information which will be shown in the Admin Page
+    def __str__(self):
+        return self.name  
+
+class Route(models.Model):
+    # The list of columns in the DB table
+    index = models.IntegerField(blank=True, null=False, primary_key=True)
+    airline = models.TextField(blank=True, null=True)
+    airline_id = models.TextField(blank=True, null=True)
+    source = models.TextField(blank=True, null=True)
+    source_id = models.TextField(blank=True, null=True)
+    dest = models.TextField(blank=True, null=True)
+    dest_id = models.TextField(blank=True, null=True)
+    codeshare = models.TextField(blank=True, null=True)
+    stops = models.TextField(blank=True, null=True)
+    equipment = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'routes'
+    # The information which will be shown in the Admin Page
+    def __str__(self):
+        return str(self.dest) + " by " + str(self.source)  
 
 class Question(models.Model):
     question_text = models.CharField(max_length=128)
@@ -29,36 +89,5 @@ class Person(models.Model):
     email = models.EmailField(blank=True)
     birth_date = models.DateField()  
     location = models.CharField(max_length=100, blank=True)      
-
-"""
-class Musician(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    instrument = models.CharField(max_length=100)
-
-class Album(models.Model):
-    artist = models.ForeignKey(Musician, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    release_date = models.DateField()
-    num_stars = models.IntegerField()
-
-class Person(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    birth_date = models.DateField()
-
-    def baby_boomer_status(self):
-        "Returns the person's baby-boomer status."
-        import datetime
-        if self.birth_date < datetime.date(1945, 8, 1):
-            return "Pre-boomer"
-        elif self.birth_date < datetime.date(1965, 1, 1):
-            return "Baby boomer"
-        else:
-            return "Post-boomer"
-
-    @property
-    def full_name(self):
-        "Returns the person's full name."
-        return '%s %s' % (self.first_name, self.last_name)
-"""
+    def __str__(self):
+        return self.name  
