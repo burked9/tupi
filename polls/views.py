@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.views import generic
 from tablib import Dataset
 
-from reportlab.pdfgen import canvas
+#from reportlab.pdfgen import canvas
 
 from .models import Choice, Question
 

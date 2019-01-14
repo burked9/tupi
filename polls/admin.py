@@ -1,6 +1,6 @@
 from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
-from .models import Choice, Question, Person, Airline, Airport, Route
+from .models import Choice, Question, Person, SalesReport
 
 class ChoiceInLine(admin.TabularInline):
     model = Choice
@@ -18,13 +18,20 @@ class QuestionAdmin(admin.ModelAdmin):
 
 # This is the old way
 admin.site.register(Question, QuestionAdmin)
-#admin.site.register(Airline) 
-#admin.site.register(Airport)
-#admin.site.register(Route)
 
 # This is the new way, which includes Import and Export Options
 @admin.register(Person)
 class PersonAdmin(ImportExportModelAdmin):
+    pass
+
+@admin.register(SalesReport)
+class SalesReportAdmin(ImportExportModelAdmin):
+    pass
+
+
+"""
+@admin.register(Inventory)
+class InventoryAdmin(ImportExportModelAdmin):
     pass
 
 @admin.register(Airline)
@@ -38,3 +45,4 @@ class AirportAdmin(ImportExportModelAdmin):
 @admin.register(Route)
 class RouteAdmin(ImportExportModelAdmin):
     pass
+"""
