@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         ## Inventory Report attempt one
-        'NAME': os.path.join(BASE_DIR, 'chinook.db'), # was flights.db & db.sqlite3
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), # was flights.db &  chinook.db
     }  
 }
 
